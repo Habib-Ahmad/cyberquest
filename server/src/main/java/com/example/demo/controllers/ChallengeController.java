@@ -5,10 +5,12 @@ import com.example.demo.models.EChallengeDifficulty;
 import com.example.demo.payload.request.ChallengeRequest;
 import com.example.demo.payload.request.FlagSubmissionRequest;
 import com.example.demo.services.ChallengeService;
+import com.example.demo.services.SubmissionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,6 +21,9 @@ public class ChallengeController {
 
     @Autowired
     ChallengeService challengeService;
+
+    @Autowired
+    SubmissionService submissionService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -60,11 +65,7 @@ public class ChallengeController {
     }
 
     @PostMapping("/{id}/submit")
-    public ResponseEntity<?> submitFlag(@PathVariable UUID id, @Valid @RequestBody FlagSubmissionRequest request) {
-        boolean correct = challengeService.verifyFlag(id, request.getFlag());
-        if (correct) {
-            return ResponseEntity.ok("Correct flag!");
-        }
-        return ResponseEntity.badRequest().body("Incorrect flag");
+    public ResponseEntity<?> submitFlag(@PathVariable UUID id, @Valid @RequestBody FlagSubmissionRequest request, Authentication authentication) {
+        return ResponseEntity.ok(submissionService.submitFlag(id, request.getFlag(), authentication.getName()));
     }
 }

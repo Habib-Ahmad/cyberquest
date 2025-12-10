@@ -111,11 +111,6 @@ public class ChallengeService {
         challengeRepository.deleteById(id);
     }
 
-    public boolean verifyFlag(UUID challengeId, String submittedFlag) {
-        Challenge challenge = challengeRepository.findById(challengeId)
-                .orElseThrow(() -> new IllegalArgumentException("Challenge not found"));
-        return passwordEncoder.matches(submittedFlag, challenge.getFlagHash());
-    }
 
     private ChallengeResponse mapToResponse(Challenge challenge) {
         return modelMapper.map(challenge, ChallengeResponse.class);
