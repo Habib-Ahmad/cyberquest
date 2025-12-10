@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "challenges")
 @Getter
@@ -19,7 +21,7 @@ import lombok.Setter;
 public class Challenge {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @NotBlank
     @Column(nullable = false, unique = true)
@@ -29,12 +31,12 @@ public class Challenge {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private EChallengeCategory category;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private EChallengeDifficulty difficulty;
