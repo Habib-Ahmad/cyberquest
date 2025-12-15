@@ -101,7 +101,7 @@ export default function ProfilePage() {
       <Card className="p-6 md:p-8 mb-8">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
           {/* Avatar */}
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center text-4xl font-bold text-white shadow-lg shadow-primary-600/25">
+          <div className="w-24 h-24 rounded-full bg-linear-to-br from-primary-600 to-primary-800 flex items-center justify-center text-4xl font-bold text-white shadow-lg shadow-primary-600/25">
             {user?.username.charAt(0).toUpperCase()}
           </div>
 
@@ -175,7 +175,7 @@ export default function ProfilePage() {
         </div>
         <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-primary-600 to-primary-400 transition-all duration-500"
+            className="h-full bg-linear-to-r from-primary-600 to-primary-400 transition-all duration-500"
             style={{ width: `${completionRate}%` }}
           />
         </div>
