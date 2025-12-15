@@ -1,9 +1,11 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exceptions.RateLimitExceededException;
 import com.example.demo.models.EChallengeCategory;
 import com.example.demo.models.EChallengeDifficulty;
 import com.example.demo.payload.request.ChallengeRequest;
 import com.example.demo.payload.request.FlagSubmissionRequest;
+import com.example.demo.security.RateLimitingService;
 import com.example.demo.services.ChallengeService;
 import com.example.demo.services.SubmissionService;
 import jakarta.validation.Valid;
@@ -24,6 +26,9 @@ public class ChallengeController {
 
     @Autowired
     SubmissionService submissionService;
+
+    @Autowired
+    RateLimitingService rateLimitingService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -66,6 +71,12 @@ public class ChallengeController {
 
     @PostMapping("/{id}/submit")
     public ResponseEntity<?> submitFlag(@PathVariable UUID id, @Valid @RequestBody FlagSubmissionRequest request, Authentication authentication) {
-        return ResponseEntity.ok(submissionService.submitFlag(id, request.getFlag(), authentication.getName()));
+        String username = authentication.getName();
+
+        if (!rateLimitingService.tryConsumeFlagSubmission(username)) {
+            throw new RateLimitExceededException("Too many flag submission attempts. Please wait before trying again.");
+        }
+
+        return ResponseEntity.ok(submissionService.submitFlag(id, request.getFlag(), username));
     }
 }

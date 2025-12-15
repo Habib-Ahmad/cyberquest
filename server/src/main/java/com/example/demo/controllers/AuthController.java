@@ -1,11 +1,14 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exceptions.RateLimitExceededException;
 import com.example.demo.payload.request.LoginRequest;
 import com.example.demo.payload.request.RegisterRequest;
 import com.example.demo.payload.response.LoginResponse;
+import com.example.demo.security.RateLimitingService;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.services.UserDetailsImpl;
 import com.example.demo.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    RateLimitingService rateLimitingService;
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signupRequest) {
         try {
@@ -43,7 +49,13 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+        String ipAddress = getClientIP(request);
+
+        if (!rateLimitingService.tryConsumeLogin(ipAddress)) {
+            throw new RateLimitExceededException("Too many login attempts. Please wait before trying again.");
+        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
@@ -66,5 +78,13 @@ public class AuthController {
                 userDetails.getEmail(),
                 roles
         ));
+    }
+
+    private String getClientIP(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }

@@ -5,6 +5,7 @@ import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.repositories.RoleRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.security.InputSanitizer;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,19 +25,26 @@ public class UserService {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    InputSanitizer inputSanitizer;
+
     @Transactional
     public User registerUser(String username, String email, String password) throws Exception {
-        if (userRepository.existsByUsername(username)) {
+        // Sanitize inputs
+        String sanitizedUsername = inputSanitizer.sanitizeUsername(username);
+        String sanitizedEmail = inputSanitizer.sanitizeEmail(email);
+
+        if (userRepository.existsByUsername(sanitizedUsername)) {
             throw new Exception("Error: Username already taken!");
         }
-        if (userRepository.existsByEmail(email)) {
+        if (userRepository.existsByEmail(sanitizedEmail)) {
             throw new Exception("Error: Email is already in use!");
         }
 
         User user = new User();
 
-        user.setUsername(username);
-        user.setEmail(email);
+        user.setUsername(sanitizedUsername);
+        user.setEmail(sanitizedEmail);
         user.setPassword(encoder.encode(password));
 
         Set<Role> roles = new HashSet<>();
