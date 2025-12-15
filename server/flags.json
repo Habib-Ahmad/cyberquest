@@ -1,0 +1,267 @@
+{
+  "flags": [
+    {
+      "id": 1,
+      "title": "SQL Injection Basics",
+      "category": "WEB",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{sql_injection_master}"
+    },
+    {
+      "id": 2,
+      "title": "XSS Reflected",
+      "category": "WEB",
+      "difficulty": "EASY",
+      "points": 150,
+      "flag": "CTF{xss_reflected_attack}"
+    },
+    {
+      "id": 3,
+      "title": "Command Injection",
+      "category": "WEB",
+      "difficulty": "MEDIUM",
+      "points": 250,
+      "flag": "CTF{command_injection_success}"
+    },
+    {
+      "id": 4,
+      "title": "CSRF Token Bypass",
+      "category": "WEB",
+      "difficulty": "MEDIUM",
+      "points": 300,
+      "flag": "CTF{csrf_protection_bypassed}"
+    },
+    {
+      "id": 5,
+      "title": "Blind SQL Injection",
+      "category": "WEB",
+      "difficulty": "HARD",
+      "points": 400,
+      "flag": "CTF{blind_sqli_time_based}"
+    },
+    {
+      "id": 6,
+      "title": "Deserialization Attack",
+      "category": "WEB",
+      "difficulty": "HARD",
+      "points": 500,
+      "flag": "CTF{deserialization_rce}"
+    },
+    {
+      "id": 7,
+      "title": "Caesar Cipher",
+      "category": "CRYPTOLOGY",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{caesar_cipher_master}"
+    },
+    {
+      "id": 8,
+      "title": "Base64 Encoding",
+      "category": "CRYPTOLOGY",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{base64_is_not_encryption}"
+    },
+    {
+      "id": 9,
+      "title": "RSA Weak Key",
+      "category": "CRYPTOLOGY",
+      "difficulty": "MEDIUM",
+      "points": 300,
+      "flag": "CTF{rsa_factorization_attack}"
+    },
+    {
+      "id": 10,
+      "title": "Vigenere Cipher",
+      "category": "CRYPTOLOGY",
+      "difficulty": "MEDIUM",
+      "points": 250,
+      "flag": "CTF{vigenere_frequency_analysis}"
+    },
+    {
+      "id": 11,
+      "title": "AES ECB Mode",
+      "category": "CRYPTOLOGY",
+      "difficulty": "HARD",
+      "points": 450,
+      "flag": "CTF{aes_ecb_penguin_attack}"
+    },
+    {
+      "id": 12,
+      "title": "Hash Length Extension",
+      "category": "CRYPTOLOGY",
+      "difficulty": "HARD",
+      "points": 500,
+      "flag": "CTF{hash_length_extension}"
+    },
+    {
+      "id": 13,
+      "title": "Hidden in Plain Sight",
+      "category": "FORENSIC",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{steganography_basics}"
+    },
+    {
+      "id": 14,
+      "title": "Deleted Files",
+      "category": "FORENSIC",
+      "difficulty": "EASY",
+      "points": 150,
+      "flag": "CTF{file_carving_recovery}"
+    },
+    {
+      "id": 15,
+      "title": "Memory Dump Analysis",
+      "category": "FORENSIC",
+      "difficulty": "MEDIUM",
+      "points": 300,
+      "flag": "CTF{memory_forensics_volatility}"
+    },
+    {
+      "id": 16,
+      "title": "PCAP Analysis",
+      "category": "FORENSIC",
+      "difficulty": "MEDIUM",
+      "points": 250,
+      "flag": "CTF{wireshark_packet_analysis}"
+    },
+    {
+      "id": 17,
+      "title": "Advanced Steganography",
+      "category": "FORENSIC",
+      "difficulty": "HARD",
+      "points": 450,
+      "flag": "CTF{audio_steganography_lsb}"
+    },
+    {
+      "id": 18,
+      "title": "Ransomware Analysis",
+      "category": "FORENSIC",
+      "difficulty": "HARD",
+      "points": 500,
+      "flag": "CTF{malware_reverse_engineering}"
+    },
+    {
+      "id": 19,
+      "title": "Port Scanning",
+      "category": "NETWORK",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{nmap_port_discovery}"
+    },
+    {
+      "id": 20,
+      "title": "FTP Anonymous Login",
+      "category": "NETWORK",
+      "difficulty": "EASY",
+      "points": 150,
+      "flag": "CTF{anonymous_ftp_access}"
+    },
+    {
+      "id": 21,
+      "title": "DNS Exfiltration",
+      "category": "NETWORK",
+      "difficulty": "MEDIUM",
+      "points": 300,
+      "flag": "CTF{dns_data_exfiltration}"
+    },
+    {
+      "id": 22,
+      "title": "ARP Spoofing",
+      "category": "NETWORK",
+      "difficulty": "MEDIUM",
+      "points": 250,
+      "flag": "CTF{arp_man_in_the_middle}"
+    },
+    {
+      "id": 23,
+      "title": "VPN Traffic Analysis",
+      "category": "NETWORK",
+      "difficulty": "HARD",
+      "points": 450,
+      "flag": "CTF{vpn_weak_encryption}"
+    },
+    {
+      "id": 24,
+      "title": "BGP Hijacking",
+      "category": "NETWORK",
+      "difficulty": "HARD",
+      "points": 500,
+      "flag": "CTF{bgp_route_hijacking}"
+    },
+    {
+      "id": 25,
+      "title": "QR Code",
+      "category": "MISC",
+      "difficulty": "EASY",
+      "points": 50,
+      "flag": "CTF{qr_code_scanning}"
+    },
+    {
+      "id": 26,
+      "title": "OSINT Challenge",
+      "category": "MISC",
+      "difficulty": "EASY",
+      "points": 100,
+      "flag": "CTF{open_source_intelligence}"
+    },
+    {
+      "id": 27,
+      "title": "Reverse Engineering Basics",
+      "category": "MISC",
+      "difficulty": "MEDIUM",
+      "points": 250,
+      "flag": "CTF{reversing_crackme_101}"
+    },
+    {
+      "id": 28,
+      "title": "Python Jail Escape",
+      "category": "MISC",
+      "difficulty": "MEDIUM",
+      "points": 300,
+      "flag": "CTF{python_sandbox_escape}"
+    },
+    {
+      "id": 29,
+      "title": "Esoteric Language",
+      "category": "MISC",
+      "difficulty": "HARD",
+      "points": 400,
+      "flag": "CTF{esoteric_programming}"
+    },
+    {
+      "id": 30,
+      "title": "Smart Contract Exploit",
+      "category": "MISC",
+      "difficulty": "HARD",
+      "points": 500,
+      "flag": "CTF{smart_contract_reentrancy}"
+    }
+  ],
+  "summary": {
+    "totalChallenges": 30,
+    "totalPoints": 7550,
+    "categories": {
+      "WEB": 6,
+      "CRYPTOLOGY": 6,
+      "FORENSIC": 6,
+      "NETWORK": 6,
+      "MISC": 6
+    },
+    "difficulties": {
+      "EASY": 10,
+      "MEDIUM": 10,
+      "HARD": 10
+    }
+  },
+  "testingInstructions": {
+    "step1": "Login: POST /api/auth/signin with {username:'admin', password:'password'}",
+    "step2": "Get challenges: GET /api/challenges",
+    "step3": "Submit flag: POST /api/challenges/{id}/submit with {flag:'CTF{...}'} and Authorization header",
+    "step4": "Check leaderboard: GET /api/leaderboard"
+  }
+}
+
