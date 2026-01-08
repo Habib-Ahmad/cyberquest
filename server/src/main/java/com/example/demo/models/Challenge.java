@@ -1,6 +1,15 @@
 package com.example.demo.models;
 
-import jakarta.persistence.*;
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,8 +17,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "challenges")
@@ -19,6 +26,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Challenge {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -27,8 +35,10 @@ public class Challenge {
     @Column(nullable = false, unique = true)
     private String title;
 
-    @NotBlank
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(length = 255)
+    private String author;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotNull

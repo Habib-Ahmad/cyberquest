@@ -1,19 +1,20 @@
 package com.example.demo.services;
 
-import com.example.demo.models.Challenge;
-import com.example.demo.models.EChallengeCategory;
-import com.example.demo.models.EChallengeDifficulty;
-import com.example.demo.payload.request.ChallengeRequest;
-import com.example.demo.payload.response.ChallengeResponse;
-import com.example.demo.repositories.ChallengeRepository;
+import java.util.List;
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import com.example.demo.models.Challenge;
+import com.example.demo.models.EChallengeCategory;
+import com.example.demo.models.EChallengeDifficulty;
+import com.example.demo.payload.request.ChallengeRequest;
+import com.example.demo.payload.response.ChallengeResponse;
+import com.example.demo.repositories.ChallengeRepository;
 
 @Service
 public class ChallengeService {
@@ -37,6 +38,7 @@ public class ChallengeService {
 
         Challenge challenge = Challenge.builder()
                 .title(request.getTitle())
+                .author(request.getAuthor())
                 .description(request.getDescription())
                 .category(request.getCategory())
                 .difficulty(request.getDifficulty())
@@ -92,6 +94,7 @@ public class ChallengeService {
         challenge.setDescription(request.getDescription());
         challenge.setCategory(request.getCategory());
         challenge.setDifficulty(request.getDifficulty());
+        challenge.setAuthor(request.getAuthor());
         challenge.setPoints(request.getPoints());
         challenge.setAttachmentUrl(request.getAttachmentUrl());
 
@@ -105,12 +108,8 @@ public class ChallengeService {
 
     @Transactional
     public void deleteChallenge(UUID id) {
-        if (!challengeRepository.existsById(id)) {
-            throw new IllegalArgumentException("Challenge not found");
-        }
         challengeRepository.deleteById(id);
     }
-
 
     private ChallengeResponse mapToResponse(Challenge challenge) {
         return modelMapper.map(challenge, ChallengeResponse.class);

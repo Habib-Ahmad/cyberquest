@@ -216,16 +216,18 @@ export default function ChallengeDetailPage() {
             <h3 className="text-lg font-semibold text-white mb-3">
               Attachment
             </h3>
-            <a
-              href={challenge.attachmentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                const fileName = challenge.attachmentUrl?.split("/").pop();
+                if (fileName) {
+                  challengeService.downloadAttachment(fileName);
+                }
+              }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
             >
               <Download className="h-4 w-4" />
               Download Attachment
-              <ExternalLink className="h-4 w-4" />
-            </a>
+            </button>
           </div>
         )}
       </Card>

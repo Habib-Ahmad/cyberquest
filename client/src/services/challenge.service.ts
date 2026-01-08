@@ -65,6 +65,29 @@ export const challengeService = {
     return api.delete(`/challenges/${id}`);
   },
 
+  // Download challenge attachment
+  async downloadAttachment(fileName: string) {
+    try {
+      const response = await api.get(`/challenges/download/${fileName}`, {
+        responseType: 'blob',
+      });
+
+      // Create a blob URL and trigger download
+      const blob = new Blob([response.data]);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+      throw error;
+    }
+  },
+
   // Legacy methods for backward compatibility
   async getAll(params?: ChallengeQueryParams): Promise<Challenge[]> {
     const response = await this.getAllChallenges(params);

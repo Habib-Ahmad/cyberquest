@@ -2,6 +2,7 @@ package com.example.demo.payload.request;
 
 import com.example.demo.models.EChallengeCategory;
 import com.example.demo.models.EChallengeDifficulty;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,10 +15,11 @@ public class ChallengeRequest {
     @NotBlank
     private String title;
 
-    @NotBlank
+    private String author;
+
     private String description;
 
-    @NotNull
+    @NotBlank
     private EChallengeCategory category;
 
     @NotNull
