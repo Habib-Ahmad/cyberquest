@@ -12,6 +12,11 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ctf_user -d ctf_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Database GUI
   # Access at http://localhost:5051
@@ -27,5 +32,49 @@ services:
     depends_on:
       - db
 
+  # Spring Boot Backend Server
+  # Access at https://localhost:9090
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: ctf_server
+    restart: always
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ctf_db
+      SPRING_DATASOURCE_USERNAME: ctf_user
+      SPRING_DATASOURCE_PASSWORD: ctf_password
+    volumes:
+      - ./server/src:/app/src
+      - ./server/uploads:/app/uploads
+      - maven_cache:/root/.m2
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # React Frontend Client
+  # Access at http://localhost:5173
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: ctf_client
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - ./client/index.html:/app/index.html
+      - ./client/vite.config.ts:/app/vite.config.ts
+      - ./client/tailwind.config.js:/app/tailwind.config.js
+      - node_modules:/app/node_modules
+    depends_on:
+      - server
+
 volumes:
   postgres_data:
+  maven_cache:
+  node_modules:
