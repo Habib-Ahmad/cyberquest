@@ -1,4 +1,4 @@
-import api, { setStoredToken, removeStoredToken } from "./api";
+import api from "./api";
 import type {
   AuthResponse,
   LoginRequest,
@@ -36,10 +36,8 @@ export const removeStoredUser = (): void => {
 export const authService = {
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     const response = await api.post<AuthResponse>("/auth/signin", credentials);
-    const { token, user } = response.data;
+    const { user } = response.data;
 
-    // Store token and user
-    setStoredToken(token);
     setStoredUser(user);
 
     return response.data;
@@ -50,15 +48,19 @@ export const authService = {
     return response.data;
   },
 
-  logout(): void {
-    removeStoredToken();
-    removeStoredUser();
+  async logout(): Promise<void> {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      removeStoredUser();
+    }
   },
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem("ctf_auth_token");
     const user = getStoredUser();
-    return !!(token && user);
+    return !!user;
   },
 
   getCurrentUser(): User | null {
