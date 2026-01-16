@@ -70,6 +70,7 @@ services:
       - ./client/index.html:/app/index.html
       - ./client/vite.config.ts:/app/vite.config.ts
       - ./client/tailwind.config.js:/app/tailwind.config.js
+      - ./client/certs:/app/certs
       - node_modules:/app/node_modules
     depends_on:
       - server

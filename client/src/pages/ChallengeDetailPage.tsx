@@ -9,7 +9,6 @@ import {
   Shuffle,
   Shield,
   Download,
-  ExternalLink,
 } from "lucide-react";
 import { useAuth } from "../context/index";
 import { challengeService, submissionService } from "../services/index";

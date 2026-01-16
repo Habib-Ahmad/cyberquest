@@ -32,6 +32,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -57,9 +58,9 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, 
-                                              HttpServletRequest request,
-                                              HttpServletResponse response) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         String ipAddress = getClientIP(request);
 
         if (!rateLimitingService.tryConsumeLogin(ipAddress)) {
@@ -83,13 +84,13 @@ public class AuthController {
 
         // This prevents XSS attacks from accessing the token
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", jwt)
-                .httpOnly(true)  // Prevent JavaScript access
-                .secure(false)   // Set to true in production with HTTPS
+                .httpOnly(true) // Prevent JavaScript access
+                .secure(true) // HTTPS only - requires SSL certificate
                 .path("/")
                 .maxAge(24 * 60 * 60) // 24 hours
-                .sameSite("Lax")  // CSRF protection
+                .sameSite("Lax") // CSRF protection
                 .build();
-        
+
         response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
 
         return ResponseEntity.ok(new LoginResponse(
@@ -105,14 +106,14 @@ public class AuthController {
     public ResponseEntity<?> logoutUser(HttpServletResponse response) {
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false)  // Set to true in production with HTTPS
+                .secure(true) // HTTPS only - requires SSL certificate
                 .path("/")
                 .maxAge(0)
                 .sameSite("Lax")
                 .build();
-        
+
         response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
-        
+
         return ResponseEntity.ok("Logged out successfully");
     }
 

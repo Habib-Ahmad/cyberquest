@@ -1,2 +1,8 @@
 .vscode
 .idea
+
+client/certs/
+*.pem
+*.key
+*.crt
+*.p12
