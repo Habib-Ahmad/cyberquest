@@ -88,7 +88,7 @@ public class AuthController {
                 .secure(true) // HTTPS only - requires SSL certificate
                 .path("/")
                 .maxAge(24 * 60 * 60) // 24 hours
-                .sameSite("Lax") // CSRF protection
+                .sameSite("None")
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
@@ -109,7 +109,7 @@ public class AuthController {
                 .secure(true) // HTTPS only - requires SSL certificate
                 .path("/")
                 .maxAge(0)
-                .sameSite("Lax")
+                .sameSite("None")
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
