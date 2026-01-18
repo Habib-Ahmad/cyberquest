@@ -18,7 +18,7 @@ export interface CreateChallengePayload {
   points: number;
   flag: string;
   hints?: string[];
-  resourceLink?: string;
+  attachmentUrl?: string;
 }
 
 export interface UpdateChallengePayload {
@@ -29,7 +29,7 @@ export interface UpdateChallengePayload {
   points: number;
   flag?: string;
   hints?: string[];
-  resourceLink?: string;
+  attachmentUrl?: string;
 }
 
 export const challengeService = {

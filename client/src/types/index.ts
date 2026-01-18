@@ -44,7 +44,6 @@ export interface Challenge {
   points: number;
   attachmentUrl?: string | null;
   hints?: string[];
-  resourceLink?: string;
   solveCount?: number;
   solved?: boolean;
 }

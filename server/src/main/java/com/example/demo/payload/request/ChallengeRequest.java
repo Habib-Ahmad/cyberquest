@@ -19,7 +19,7 @@ public class ChallengeRequest {
 
     private String description;
 
-    @NotBlank
+    @NotNull
     private EChallengeCategory category;
 
     @NotNull

@@ -24,7 +24,7 @@ interface ChallengeFormData {
   difficulty: ChallengeDifficulty | "";
   points: number;
   flag: string;
-  resourceLink: string;
+  attachmentUrl: string;
 }
 
 const DIFFICULTY_OPTIONS = [
@@ -51,7 +51,7 @@ const initialFormData: ChallengeFormData = {
   difficulty: "",
   points: 100,
   flag: "",
-  resourceLink: "",
+  attachmentUrl: "",
 };
 
 export default function AdminChallengeForm() {
@@ -83,7 +83,7 @@ export default function AdminChallengeForm() {
         difficulty: challenge.difficulty,
         points: challenge.points,
         flag: "", // Flag is not returned from API for security
-        resourceLink: challenge.resourceLink || "",
+        attachmentUrl: challenge.attachmentUrl || "",
       });
     } catch (err) {
       setError("Failed to load challenge");
@@ -137,7 +137,7 @@ export default function AdminChallengeForm() {
         difficulty: formData.difficulty as ChallengeDifficulty,
         points: formData.points,
         flag: formData.flag.trim(),
-        resourceLink: formData.resourceLink.trim() || undefined,
+        attachmentUrl: formData.attachmentUrl.trim() || undefined,
       };
 
       if (isEdit && id) {
@@ -293,8 +293,8 @@ export default function AdminChallengeForm() {
             {/* Resource Link */}
             <Input
               label="Resource Link (optional)"
-              name="resourceLink"
-              value={formData.resourceLink}
+              name="attachmentUrl"
+              value={formData.attachmentUrl}
               onChange={handleChange}
               placeholder="https://example.com/challenge-files"
             />

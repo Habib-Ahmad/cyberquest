@@ -1,20 +1,27 @@
 package com.example.demo.security.jwt;
 
-import com.example.demo.security.services.UserDetailsImpl;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import java.util.Date;
+import com.example.demo.security.services.UserDetailsImpl;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtils {
+
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class.getName());
 
     @Value("${app.jwtSecret}")
@@ -35,8 +42,15 @@ public class JwtUtils {
             throw new IllegalArgumentException("Principal is not an instance of UserDetailsImpl");
         }
 
+        // Extract roles from authorities
+        String roles = userPrincipal.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .reduce((a, b) -> a + "," + b)
+                .orElse("");
+
         return Jwts.builder()
                 .subject((userPrincipal.getUsername()))
+                .claim("roles", roles)
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(getSigningKey(), Jwts.SIG.HS256)
