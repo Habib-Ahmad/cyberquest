@@ -30,6 +30,9 @@ public class LeaderboardService {
                 .filter(user -> !user.getEmail().endsWith("@cyberquest.com"))
                 .toList();
 
+        // Convert immutable list to mutable list for sorting
+        users = new ArrayList<>(users);
+
         // Sort by score descending, then by last correct submission time ascending (earlier = better)
         users.sort(Comparator
                 .comparing(User::getCurrentScore).reversed()
